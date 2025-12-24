@@ -12,14 +12,13 @@ class DynamicArray():
     def __len__(self): # overload para usar el metodo len()
         return self.n
     
-    def __getitem__(self, k): # overload para usar el metodo getitem()
-        if not 0 <= k <= self.n:
-            return IndexError("Element is out of index")
+    def __getitem__(self, k): # overload para usar los square brackets [] (ejemplo: arr[k] -> eso internamente llama a arr.__getitem__(k))
+        if not 0 <= k < self.n:
+            raise IndexError("Element is out of index")
         
         return self.A[k]
     
     #Funcionalidades de mi array dinamico
-    
     
     def append(self, element):
         
@@ -28,14 +27,14 @@ class DynamicArray():
 
         self.A[self.n] = element
 
-        self.n += self.n
+        self.n += 1 # Actualizamos capacidad
 
     #Desplazamos a partir del index todos los valores a la derecha, insertamos el nuevo valor en el index y aumentamos en 1 la cantidadde elementos 
     # si es necesario, hacemos resize
     def insertAt(self, index, element):
 
         if index > self.n - 1 or index < 0:
-            return IndexError("Index out of range")
+            raise IndexError("Index out of range")
         
         if self.n == self.capacity:
             self._resize(self.capacity * 2) # Lo mas comun es ir duplicando la capacidad del array
@@ -69,3 +68,14 @@ class DynamicArray():
         self.A = B  # Apuntamos el array al nuevo espacio de memoria (el arrray viejo queda como garbage collection que despues se reusa)
         self.capacity = new_capacity # Actualizamos la capacidad
 
+
+
+
+arr = DynamicArray()
+arr.append(1)
+arr.append(2)
+arr.append(3)
+arr.insertAt(1, 99)
+
+print(arr[0], arr[1], arr[2], arr[3])
+print("len:", len(arr))
