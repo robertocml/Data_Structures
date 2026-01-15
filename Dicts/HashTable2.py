@@ -2,7 +2,7 @@
 # Esta implementacion usa una funcion hash muy sencilla con el fin de entender el concepto.
 # Simplemente usamos el valor ascii de la primera letra del key y a eso le sacamos el modulo 
 
-# Para resolver los problemas de colisiones usamos la tecnica de separate chaning (linked lists en cada bucket de nuestra tabla)
+# Para resolver los problemas de colisiones usamos la tecnica de separate chainning (linked lists en cada bucket de nuestra tabla)
 
 class HashTable:
     def __init__(self, size):
@@ -37,3 +37,34 @@ class HashTable:
                 return
 
         raise KeyError(f'Key {key} not found')
+    
+
+
+
+
+#### Ejemplo:
+tabla = HashTable(size=10)
+
+tabla.set("Roberto", 28)  # 'R' → ASCII 82 → 82 % 10 = 2
+tabla.set("Hugo", 35)     # 'H' → ASCII 72 → 72 % 10 = 2  ← colisión con "Roberto"
+tabla.set("Ana", 22)      # 'A' → ASCII 65 → 65 % 10 = 5
+tabla.set("Carlos", 40)   # 'C' → ASCII 67 → 67 % 10 = 7
+tabla.set("Luis", 31)    # 'L' → ASCII 76 → 76 % 10 = 6
+
+print(tabla.get("Roberto")) 
+print(tabla.get("Hugo"))
+
+
+## Asi queda la tabla:
+# Índice 0 → []
+# Índice 1 → []
+# Índice 2 → [["Roberto", 28], ["Hugo", 35]  ← única colisión (mismo index de resultado de nuestra funcion _hash para ambos)
+# Índice 3 → []
+# Índice 4 → []
+# Índice 5 → [["Ana", 22]]
+# Índice 6 → [["Luis", 31]]
+# Índice 7 → [["Carlos", 40]]
+# Índice 8 → []
+# Índice 9 → []
+
+ 
